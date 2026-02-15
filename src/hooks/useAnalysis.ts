@@ -31,44 +31,50 @@ export function useAnalysis() {
         throw new Error("Webhook did not return valid JSON. Check n8n workflow output.");
       }
 
-      // The webhook may return { status, data: {...} } or a flat object
-      const src = raw?.data ?? raw;
+      // The webhook may return an array, { status, data: {...} }, or a flat object
+      const unwrapped = Array.isArray(raw) ? raw[0] : raw;
+      const src = unwrapped?.data ?? unwrapped;
 
       const data: LeadScoreResult = {
-        score: src.score ?? 0,
-        tier: src.tier ?? "COLD",
-        url: src.url ?? url,
-        date: src.date ?? new Date().toISOString().slice(0, 10),
+        score: src.score_final ?? src.score ?? 0,
+        tier: (src.calificacion ?? src.tier ?? "COLD") as any,
+        url: src.URL ?? src.url ?? url,
+        date: src.date ?? src.fecha_calculo?.slice(0, 10) ?? new Date().toISOString().slice(0, 10),
         revenue: {
-          estimated_annual: src.revenue?.estimated_annual ?? src.estimated_annual ?? "N/A",
-          currency: src.revenue?.currency ?? src.currency ?? "EUR",
+          estimated_annual: src.revenue?.estimated_annual ?? (src.ventas_estimadas_anuales != null ? `$${Number(src.ventas_estimadas_anuales).toLocaleString()}` : src.estimated_annual ?? "N/A"),
+          currency: src.revenue?.currency ?? src.currency ?? "USD",
         },
         traffic: {
-          monthly_visits: src.traffic?.monthly_visits ?? (typeof src.traffic === "number" ? src.traffic : 0),
-          total_visits_3m: src.traffic?.total_visits_3m ?? (typeof src.traffic === "number" ? src.traffic * 3 : 0),
-          country: src.traffic?.country ?? src.country ?? "Unknown",
-          category: src.traffic?.category ?? src.sector ?? src.category ?? "Unknown",
+          monthly_visits: src.traffic?.monthly_visits ?? src.promedio_visitas_mensuales ?? (typeof src.traffic === "number" ? src.traffic : 0),
+          total_visits_3m: src.traffic?.total_visits_3m ?? src.visitas_totales_mensuales ?? (typeof src.traffic === "number" ? src.traffic * 3 : 0),
+          country: src.traffic?.country ?? src.pais_codigo ?? src.country ?? "Unknown",
+          category: src.traffic?.category ?? src.categoria ?? src.sector ?? src.category ?? "Unknown",
         },
         products: {
-          count: src.products?.count ?? src.product_count ?? 0,
+          count: src.products?.count ?? src.numero_productos ?? src.product_count ?? 0,
         },
         infrastructure: {
-          cms: src.infrastructure?.cms ?? src.cms ?? "Unknown",
-          cms_confidence: src.infrastructure?.cms_confidence ?? src.cms_confidence ?? 0,
-          email_tool: src.infrastructure?.email_tool ?? src.email_tool ?? "Unknown",
-          email_tool_confidence: src.infrastructure?.email_tool_confidence ?? src.email_tool_confidence ?? 0,
-          scoring_version: src.infrastructure?.scoring_version ?? src.scoring_version ?? "N/A",
-          metrics_date: src.infrastructure?.metrics_date ?? src.metrics_date ?? "N/A",
+          cms: src.infrastructure?.cms ?? src.cms_name ?? src.cms ?? "Unknown",
+          cms_confidence: src.infrastructure?.cms_confidence ?? src.cms_confianza ?? src.cms_confidence ?? 0,
+          email_tool: src.infrastructure?.email_tool ?? src.email_mktg_tool ?? src.email_tool ?? "Unknown",
+          email_tool_confidence: src.infrastructure?.email_tool_confidence ?? src.email_tool_confianza ?? src.email_tool_confidence ?? 0,
+          scoring_version: src.infrastructure?.scoring_version ?? src.version_scoring ?? src.scoring_version ?? "N/A",
+          metrics_date: src.infrastructure?.metrics_date ?? src.fecha_metricas?.slice(0, 10) ?? src.metrics_date ?? "N/A",
         },
         traffic_breakdown: src.traffic_breakdown ?? {
-          direct: 0, search: 0, referrals: 0, paid_referrals: 0, social: 0, email: 0,
+          direct: src.trafico_direct ?? 0,
+          search: src.trafico_search ?? 0,
+          referrals: src.trafico_referrals ?? 0,
+          paid_referrals: src.trafico_paid_referrals ?? 0,
+          social: src.trafico_social ?? 0,
+          email: src.trafico_mail ?? 0,
         },
         justifications: src.justifications ?? {
-          sector: src.resumen || "No data available.",
-          traffic: src.estrategia || "No data available.",
-          email_tool: "",
-          cms: "",
-          engagement: "",
+          sector: src.sector_justificacion ?? src.resumen ?? "No data available.",
+          traffic: src.visitas_justificacion ?? src.estrategia ?? "No data available.",
+          email_tool: src.email_justificacion ?? "",
+          cms: src.cms_justificacion ?? "",
+          engagement: src.engagement_justificacion ?? "",
         },
       };
 
