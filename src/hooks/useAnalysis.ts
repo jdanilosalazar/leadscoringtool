@@ -14,11 +14,8 @@ export function useAnalysis() {
     setState({ status: "loading" });
 
     try {
-      const response = await fetch("https://n8n.jdanilosalazar.lat/webhook-test/0eeb2579-6cc3-4c27-80d1-1f5a2b23eb75", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url }),
-      });
+      const params = new URLSearchParams({ url });
+      const response = await fetch(`https://n8n.jdanilosalazar.lat/webhook-test/0eeb2579-6cc3-4c27-80d1-1f5a2b23eb75?${params}`);
       if (!response.ok) throw new Error("Analysis failed");
       const data: LeadScoreResult = await response.json();
 
