@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { LeadScoreResult, MOCK_RESULT } from "@/types/lead-score";
+import { LeadScoreResult } from "@/types/lead-score";
 
 type AnalysisState =
   | { status: "idle" }
@@ -14,18 +14,13 @@ export function useAnalysis() {
     setState({ status: "loading" });
 
     try {
-      // TODO: Replace with actual API call to /api/analyze
-      // const response = await fetch("/api/analyze", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({ url }),
-      // });
-      // if (!response.ok) throw new Error("Analysis failed");
-      // const data = await response.json();
-
-      // Simulate API delay with mock data
-      await new Promise((resolve) => setTimeout(resolve, 4000));
-      const data: LeadScoreResult = { ...MOCK_RESULT, url, date: new Date().toISOString().split("T")[0] };
+      const response = await fetch("https://n8n.jdanilosalazar.lat/webhook-test/0eeb2579-6cc3-4c27-80d1-1f5a2b23eb75", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url }),
+      });
+      if (!response.ok) throw new Error("Analysis failed");
+      const data: LeadScoreResult = await response.json();
 
       setState({ status: "success", data });
     } catch (err) {
