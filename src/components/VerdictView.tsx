@@ -26,7 +26,7 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
               className="text-sm text-muted-foreground hover:text-foreground font-medium transition-colors inline-flex items-center gap-1.5"
             >
               <Download className="h-3.5 w-3.5" />
-              Download PDF
+              Descargar PDF
             </button>
             <button
               onClick={onReset}
