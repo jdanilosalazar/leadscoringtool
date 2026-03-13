@@ -24,7 +24,7 @@ export function useAnalysis() {
 
       let raw: any;
       try { raw = JSON.parse(text); }
-      catch { throw new Error("Webhook did not return valid JSON."); }
+      catch { throw new Error("El webhook no devolvió un JSON válido."); }
 
       const unwrapped = Array.isArray(raw) ? raw[0] : raw;
       const s = unwrapped?.data ?? unwrapped;
