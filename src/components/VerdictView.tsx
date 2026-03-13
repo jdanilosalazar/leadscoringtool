@@ -6,6 +6,7 @@ import { SignalsBreakdown } from "@/components/SignalsBreakdown";
 import { InfrastructureSection } from "@/components/InfrastructureSection";
 import { TrafficComposition } from "@/components/TrafficComposition";
 import { TierDefinitions } from "@/components/TierDefinitions";
+import { HowItWorks } from "@/components/HowItWorks";
 
 interface VerdictViewProps {
   data: LeadScoreResult;
@@ -92,6 +93,8 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
         />
 
         <TierDefinitions />
+
+        <HowItWorks />
 
         <footer className="pt-8 pb-16 text-center">
           <p className="text-xs text-muted-foreground font-mono">
