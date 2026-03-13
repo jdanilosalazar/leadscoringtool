@@ -32,7 +32,7 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
               onClick={onReset}
               className="text-sm text-primary hover:underline font-medium transition-colors"
             >
-              New Analysis
+              Nuevo Análisis
             </button>
           </div>
         </header>
