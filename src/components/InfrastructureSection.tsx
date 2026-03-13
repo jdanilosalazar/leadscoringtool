@@ -1,10 +1,10 @@
 const EMAIL_GROUP_LABEL: Record<number, string> = {
-  0: "None detected",
-  1: "Simple sender (Shopify Email / Sendgrid)",
-  2: "Basic tool (Mailerlite / Mailjet)",
-  3: "Full tool (Mailchimp / Brevo / Omnisend)",
-  4: "Advanced tool (Klaviyo / Connectif)",
-  5: "CRM with email (HubSpot / Salesforce)",
+  0: "No detectado",
+  1: "Envío simple (Shopify Email / Sendgrid)",
+  2: "Herramienta básica (Mailerlite / Mailjet)",
+  3: "Herramienta completa (Mailchimp / Brevo / Omnisend)",
+  4: "Herramienta avanzada (Klaviyo / Connectif)",
+  5: "CRM con email (HubSpot / Salesforce)",
 };
 
 interface InfrastructureSectionProps {
