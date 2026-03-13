@@ -1,8 +1,8 @@
 import { LeadScoreResult } from "@/types/lead-score";
 import { ScoreHero } from "@/components/ScoreHero";
-import { RevenueOverview } from "@/components/RevenueOverview";
+import { StoreOverview } from "@/components/StoreOverview";
+import { SignalsBreakdown } from "@/components/SignalsBreakdown";
 import { InfrastructureSection } from "@/components/InfrastructureSection";
-import { ScoringJustifications } from "@/components/ScoringJustifications";
 import { TrafficComposition } from "@/components/TrafficComposition";
 import { TierDefinitions } from "@/components/TierDefinitions";
 
@@ -27,35 +27,65 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
           </button>
         </header>
 
-        <ScoreHero score={data.score} tier={data.tier} url={data.url} date={data.date} />
+        <ScoreHero
+          points={data.points}
+          tier={data.tier}
+          icp_fit={data.icp_fit}
+          url={data.url}
+          merchant_name={data.merchant_name}
+          sitio_descripcion={data.sitio_descripcion}
+          fecha_calculo={data.fecha_calculo}
+          pais_codigo={data.pais_codigo}
+        />
 
-        <RevenueOverview
-          estimated_annual={data.revenue.estimated_annual}
-          monthly_visits={data.traffic.monthly_visits}
-          total_visits_3m={data.traffic.total_visits_3m}
-          product_count={data.products.count}
-          country={data.traffic.country}
-          category={data.traffic.category}
+        <StoreOverview
+          promedio_visitas_mensuales={data.promedio_visitas_mensuales}
+          visitas_totales_mensuales={data.visitas_totales_mensuales}
+          visitas_ultimo_mes={data.visitas_ultimo_mes}
+          traffic_band={data.traffic_band}
+          m1_to_m3_growth_pct={data.m1_to_m3_growth_pct}
+          numero_productos={data.numero_productos}
+          categoria={data.categoria}
+          categoria_original={data.categoria_original}
+          rank_global={data.rank_global}
+          tasa_rebote={data.tasa_rebote}
+          paginas_por_sesion={data.paginas_por_sesion}
+          duracion_visita_minutos={data.duracion_visita_minutos}
+        />
+
+        <SignalsBreakdown
+          signals_llm_readable={data.signals_llm_readable}
+          points={data.points}
         />
 
         <InfrastructureSection
-          cms={data.infrastructure.cms}
-          cms_confidence={data.infrastructure.cms_confidence}
-          email_tool={data.infrastructure.email_tool}
-          email_tool_confidence={data.infrastructure.email_tool_confidence}
-          scoring_version={data.infrastructure.scoring_version}
-          metrics_date={data.infrastructure.metrics_date}
+          cms_name={data.cms_name}
+          cms_confianza={data.cms_confianza}
+          cms_source={data.cms_source}
+          email_mktg_tool={data.email_mktg_tool}
+          email_tool_grupo={data.email_tool_grupo}
+          email_tool_confianza={data.email_tool_confianza}
+          email_tools_all={data.email_tools_all}
+          installed_apps_names={data.installed_apps_names}
+          version_scoring={data.version_scoring}
+          fecha_metricas={data.fecha_metricas}
+          data_source={data.data_source}
         />
 
-        <ScoringJustifications justifications={data.justifications} />
-
-        <TrafficComposition breakdown={data.traffic_breakdown} />
+        <TrafficComposition
+          trafico_direct={data.trafico_direct}
+          trafico_search={data.trafico_search}
+          trafico_referrals={data.trafico_referrals}
+          trafico_paid_referrals={data.trafico_paid_referrals}
+          trafico_social={data.trafico_social}
+          trafico_mail={data.trafico_mail}
+        />
 
         <TierDefinitions />
 
         <footer className="pt-8 pb-16 text-center">
           <p className="text-xs text-muted-foreground font-mono">
-            Probance Lead Scoring — Internal Use Only
+            Probance Lead Scoring v{data.version_scoring} — Internal Use Only
           </p>
         </footer>
       </div>

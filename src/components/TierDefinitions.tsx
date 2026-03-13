@@ -1,8 +1,8 @@
 export function TierDefinitions() {
   const tiers = [
-    { label: "HOT", color: "bg-tier-hot", description: "High qualification score" },
-    { label: "WARM", color: "bg-tier-warm", description: "Medium qualification score" },
-    { label: "COLD", color: "bg-tier-cold", description: "Low qualification score" },
+    { label: "HOT",  color: "bg-tier-hot",  threshold: "≥ 7 pts", description: "High qualification — prioritize contact" },
+    { label: "WARM", color: "bg-tier-warm", threshold: "4–6 pts", description: "Medium qualification — worth pursuing" },
+    { label: "COLD", color: "bg-tier-cold", threshold: "< 4 pts", description: "Low qualification — deprioritize" },
   ];
 
   return (
@@ -14,6 +14,7 @@ export function TierDefinitions() {
             <div key={t.label} className="text-center space-y-2">
               <div className={`h-2 rounded-full ${t.color}`} />
               <p className="font-mono text-sm font-semibold">{t.label}</p>
+              <p className="font-mono text-xs text-primary">{t.threshold}</p>
               <p className="text-xs text-muted-foreground">{t.description}</p>
             </div>
           ))}

@@ -1,38 +1,77 @@
+const EMAIL_GROUP_LABEL: Record<number, string> = {
+  0: "None detected",
+  1: "Simple sender (Shopify Email / Sendgrid)",
+  2: "Basic tool (Mailerlite / Mailjet)",
+  3: "Full tool (Mailchimp / Brevo / Omnisend)",
+  4: "Advanced tool (Klaviyo / Connectif)",
+  5: "CRM with email (HubSpot / Salesforce)",
+};
+
 interface InfrastructureSectionProps {
-  cms: string;
-  cms_confidence: number;
-  email_tool: string;
-  email_tool_confidence: number;
-  scoring_version: string;
-  metrics_date: string;
+  cms_name: string | null;
+  cms_confianza: number | null;
+  cms_source: string | null;
+  email_mktg_tool: string | null;
+  email_tool_grupo: number;
+  email_tool_confianza: number;
+  email_tools_all: string | null;
+  installed_apps_names: string | null;
+  version_scoring: string;
+  fecha_metricas: string | null;
+  data_source: string | null;
 }
 
 function DataRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex justify-between items-center py-2.5 border-b border-border last:border-0">
-      <span className="text-sm text-muted-foreground">{label}</span>
-      <span className="font-mono text-sm font-medium">{value}</span>
+    <div className="flex justify-between items-start py-2.5 border-b border-border last:border-0 gap-4">
+      <span className="text-sm text-muted-foreground shrink-0">{label}</span>
+      <span className="font-mono text-sm font-medium text-right">{value}</span>
     </div>
   );
 }
 
 export function InfrastructureSection({
-  cms,
-  cms_confidence,
-  email_tool,
-  email_tool_confidence,
-  scoring_version,
-  metrics_date,
+  cms_name,
+  cms_confianza,
+  cms_source,
+  email_mktg_tool,
+  email_tool_grupo,
+  email_tool_confianza,
+  email_tools_all,
+  installed_apps_names,
+  version_scoring,
+  fecha_metricas,
+  data_source,
 }: InfrastructureSectionProps) {
+  const emailDisplay = email_mktg_tool
+    ? `${email_mktg_tool} — ${email_tool_confianza}%`
+    : "Not detected";
+
+  const groupLabel = EMAIL_GROUP_LABEL[email_tool_grupo] ?? "Unknown";
+
   return (
-    <section className="space-y-4 animate-fade-in" style={{ animationDelay: "200ms" }}>
-      <h2 className="text-lg font-semibold">Infrastructure & Stack Detection</h2>
+    <section className="space-y-4 animate-fade-in" style={{ animationDelay: "300ms" }}>
+      <h2 className="text-lg font-semibold">Infrastructure & Stack</h2>
       <div className="bg-card border border-border rounded-lg px-5">
-        <DataRow label="CMS" value={`${cms} — ${cms_confidence}%`} />
-        <DataRow label="Email Marketing Tool" value={email_tool_confidence > 0 ? `${email_tool} — ${email_tool_confidence}%` : "Not detected"} />
-        <DataRow label="Scoring Version" value={scoring_version} />
-        <DataRow label="Metrics Date" value={metrics_date} />
+        <DataRow
+          label="CMS"
+          value={`${cms_name ? cms_name.charAt(0).toUpperCase() + cms_name.slice(1) : "—"} — ${cms_confianza ?? "?"}%`}
+        />
+        <DataRow label="CMS Source" value={cms_source ?? "—"} />
+        <DataRow label="Email Tool" value={emailDisplay} />
+        <DataRow label="Email Group" value={`Group ${email_tool_grupo} — ${groupLabel}`} />
+        {email_tools_all && <DataRow label="All Email Tools" value={email_tools_all} />}
+        <DataRow label="Metrics Date" value={fecha_metricas?.slice(0, 10) ?? "—"} />
+        <DataRow label="Data Source" value={data_source ?? "—"} />
+        <DataRow label="Scoring Version" value={`v${version_scoring}`} />
       </div>
+
+      {installed_apps_names && (
+        <div className="bg-card border border-border rounded-lg p-4 space-y-2">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Installed Apps</p>
+          <p className="text-sm leading-relaxed text-muted-foreground">{installed_apps_names}</p>
+        </div>
+      )}
     </section>
   );
 }
