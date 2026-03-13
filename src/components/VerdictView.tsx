@@ -20,12 +20,21 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
           <h1 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground">
             Probance Lead Scoring
           </h1>
-          <button
-            onClick={onReset}
-            className="text-sm text-primary hover:underline font-medium transition-colors"
-          >
-            New Analysis
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => window.print()}
+              className="text-sm text-muted-foreground hover:text-foreground font-medium transition-colors inline-flex items-center gap-1.5"
+            >
+              <Download className="h-3.5 w-3.5" />
+              Download PDF
+            </button>
+            <button
+              onClick={onReset}
+              className="text-sm text-primary hover:underline font-medium transition-colors"
+            >
+              New Analysis
+            </button>
+          </div>
         </header>
 
         <ScoreHero
