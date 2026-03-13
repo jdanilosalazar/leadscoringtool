@@ -1,4 +1,5 @@
 import { LeadScoreResult } from "@/types/lead-score";
+import { Download } from "lucide-react";
 import { ScoreHero } from "@/components/ScoreHero";
 import { StoreOverview } from "@/components/StoreOverview";
 import { SignalsBreakdown } from "@/components/SignalsBreakdown";
