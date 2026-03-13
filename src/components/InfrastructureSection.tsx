@@ -68,7 +68,7 @@ export function InfrastructureSection({
 
       {installed_apps_names && (
         <div className="bg-card border border-border rounded-lg p-4 space-y-2">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Installed Apps</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Apps Instaladas</p>
           <p className="text-sm leading-relaxed text-muted-foreground">{installed_apps_names}</p>
         </div>
       )}

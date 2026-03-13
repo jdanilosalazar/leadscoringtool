@@ -60,17 +60,17 @@ export function StoreOverview({
 
   return (
     <section className="space-y-4 animate-fade-in" style={{ animationDelay: "100ms" }}>
-      <h2 className="text-lg font-semibold">Store Overview</h2>
+      <h2 className="text-lg font-semibold">Resumen de la Tienda</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-        <MetricCard label="Avg Monthly Visits" value={fmt(promedio_visitas_mensuales)} mono />
-        <MetricCard label="Traffic Band" value={traffic_band} mono />
-        <MetricCard label="M1→M3 Growth" value={growthDisplay} mono highlight={growthHighlight} />
-        <MetricCard label="Last Month Visits" value={visitas_ultimo_mes !== null ? fmt(visitas_ultimo_mes) : "—"} mono />
-        <MetricCard label="Total Visits (3mo)" value={visitas_totales_mensuales !== null ? fmt(visitas_totales_mensuales) : "—"} mono />
-        <MetricCard label="Products" value={fmt(numero_productos)} mono />
-        <MetricCard label="Category" value={categoria ?? "—"} />
-        <MetricCard label="Original Category" value={categoria_original ?? "—"} />
-        {rank_global ? <MetricCard label="Global Rank" value={`#${fmt(rank_global)}`} mono /> : null}
+        <MetricCard label="Visitas Mensuales Prom." value={fmt(promedio_visitas_mensuales)} mono />
+        <MetricCard label="Banda de Tráfico" value={traffic_band} mono />
+        <MetricCard label="Crecimiento M1→M3" value={growthDisplay} mono highlight={growthHighlight} />
+        <MetricCard label="Visitas Último Mes" value={visitas_ultimo_mes !== null ? fmt(visitas_ultimo_mes) : "—"} mono />
+        <MetricCard label="Visitas Totales (3m)" value={visitas_totales_mensuales !== null ? fmt(visitas_totales_mensuales) : "—"} mono />
+        <MetricCard label="Productos" value={fmt(numero_productos)} mono />
+        <MetricCard label="Categoría" value={categoria ?? "—"} />
+        <MetricCard label="Categoría Original" value={categoria_original ?? "—"} />
+        {rank_global ? <MetricCard label="Ranking Global" value={`#${fmt(rank_global)}`} mono /> : null}
       </div>
 
       {/* Engagement row */}
@@ -79,14 +79,14 @@ export function StoreOverview({
           <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider pt-2">Engagement</h3>
           <div className="grid grid-cols-3 gap-3">
             {tasa_rebote !== null && (
-              <MetricCard label="Bounce Rate" value={`${tasa_rebote}%`} mono
+              <MetricCard label="Tasa de Rebote" value={`${tasa_rebote}%`} mono
                 highlight={tasa_rebote < 30 ? "positive" : tasa_rebote > 60 ? "negative" : "neutral"} />
             )}
             {paginas_por_sesion !== null && (
-              <MetricCard label="Pages / Session" value={paginas_por_sesion.toFixed(2)} mono />
+              <MetricCard label="Páginas / Sesión" value={paginas_por_sesion.toFixed(2)} mono />
             )}
             {duracion_visita_minutos !== null && (
-              <MetricCard label="Avg Visit (min)" value={duracion_visita_minutos.toFixed(2)} mono />
+              <MetricCard label="Duración Visita (min)" value={duracion_visita_minutos.toFixed(2)} mono />
             )}
           </div>
         </>

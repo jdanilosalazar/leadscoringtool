@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 
 const MESSAGES = [
-  "Collecting traffic metrics…",
-  "Detecting ecommerce infrastructure…",
-  "Evaluating scoring rules…",
-  "Finalizing classification…",
+  "Recopilando métricas de tráfico…",
+  "Detectando infraestructura ecommerce…",
+  "Evaluando reglas de puntuación…",
+  "Finalizando clasificación…",
 ];
 
 export function AnalysisLoading() {

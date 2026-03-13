@@ -95,7 +95,7 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
 
         <footer className="pt-8 pb-16 text-center">
           <p className="text-xs text-muted-foreground font-mono">
-            Probance Lead Scoring v{data.version_scoring} — Internal Use Only
+            Probance Lead Scoring v{data.version_scoring} — Solo para uso interno
           </p>
         </footer>
       </div>

@@ -86,7 +86,7 @@ export function useAnalysis() {
     } catch (err) {
       setState({
         status: "error",
-        message: err instanceof Error ? err.message : "Analysis failed. Please try again.",
+        message: err instanceof Error ? err.message : "El análisis falló. Intente de nuevo.",
       });
     }
   }, []);

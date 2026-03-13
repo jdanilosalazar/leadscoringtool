@@ -8,10 +8,10 @@ interface TrafficCompositionProps {
 }
 
 const LABELS: Record<string, string> = {
-  trafico_direct:        "Direct",
-  trafico_search:        "Search",
-  trafico_referrals:     "Referrals",
-  trafico_paid_referrals:"Paid Referrals",
+  trafico_direct:        "Directo",
+  trafico_search:        "Búsqueda",
+  trafico_referrals:     "Referencias",
+  trafico_paid_referrals:"Referencias Pagadas",
   trafico_social:        "Social",
   trafico_mail:          "Email",
 };
@@ -22,7 +22,7 @@ export function TrafficComposition(props: TrafficCompositionProps) {
 
   return (
     <section className="space-y-4 animate-fade-in" style={{ animationDelay: "400ms" }}>
-      <h2 className="text-lg font-semibold">Traffic Composition</h2>
+      <h2 className="text-lg font-semibold">Composición de Tráfico</h2>
       <div className="bg-card border border-border rounded-lg p-5 space-y-3">
         {entries
           .sort(([, a], [, b]) => b - a)
