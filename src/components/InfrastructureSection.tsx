@@ -45,25 +45,25 @@ export function InfrastructureSection({
 }: InfrastructureSectionProps) {
   const emailDisplay = email_mktg_tool
     ? `${email_mktg_tool} — ${email_tool_confianza}%`
-    : "Not detected";
+    : "No detectado";
 
-  const groupLabel = EMAIL_GROUP_LABEL[email_tool_grupo] ?? "Unknown";
+  const groupLabel = EMAIL_GROUP_LABEL[email_tool_grupo] ?? "Desconocido";
 
   return (
     <section className="space-y-4 animate-fade-in" style={{ animationDelay: "300ms" }}>
-      <h2 className="text-lg font-semibold">Infrastructure & Stack</h2>
+      <h2 className="text-lg font-semibold">Infraestructura y Stack</h2>
       <div className="bg-card border border-border rounded-lg px-5">
         <DataRow
           label="CMS"
           value={`${cms_name ? cms_name.charAt(0).toUpperCase() + cms_name.slice(1) : "—"} — ${cms_confianza ?? "?"}%`}
         />
-        <DataRow label="CMS Source" value={cms_source ?? "—"} />
-        <DataRow label="Email Tool" value={emailDisplay} />
-        <DataRow label="Email Group" value={`Group ${email_tool_grupo} — ${groupLabel}`} />
-        {email_tools_all && <DataRow label="All Email Tools" value={email_tools_all} />}
-        <DataRow label="Metrics Date" value={fecha_metricas?.slice(0, 10) ?? "—"} />
-        <DataRow label="Data Source" value={data_source ?? "—"} />
-        <DataRow label="Scoring Version" value={`v${version_scoring}`} />
+        <DataRow label="Fuente CMS" value={cms_source ?? "—"} />
+        <DataRow label="Herramienta Email" value={emailDisplay} />
+        <DataRow label="Grupo Email" value={`Grupo ${email_tool_grupo} — ${groupLabel}`} />
+        {email_tools_all && <DataRow label="Todas las Herramientas Email" value={email_tools_all} />}
+        <DataRow label="Fecha Métricas" value={fecha_metricas?.slice(0, 10) ?? "—"} />
+        <DataRow label="Fuente de Datos" value={data_source ?? "—"} />
+        <DataRow label="Versión Scoring" value={`v${version_scoring}`} />
       </div>
 
       {installed_apps_names && (
