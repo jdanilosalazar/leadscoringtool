@@ -20,7 +20,7 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
           <h1 className="text-sm font-semibold tracking-wider uppercase text-muted-foreground">
             Probance Lead Scoring
           </h1>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 print-hidden">
             <button
               onClick={() => window.print()}
               className="text-sm text-muted-foreground hover:text-foreground font-medium transition-colors inline-flex items-center gap-1.5"
