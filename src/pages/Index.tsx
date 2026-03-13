@@ -37,10 +37,10 @@ const Index = () => {
             Probance Lead Scoring
           </p>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-            Run the Lead Score.
+            Ejecutar Lead Score.
           </h1>
           <p className="text-muted-foreground text-lg">
-            Structured ecommerce qualification in seconds.
+            Calificación estructurada de ecommerce en segundos.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ const Index = () => {
             type="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://www.example.com"
+            placeholder="https://www.ejemplo.com"
             required
             className="w-full bg-card border border-border rounded-lg px-5 py-4 text-base font-mono placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow"
           />
@@ -58,7 +58,7 @@ const Index = () => {
             disabled={!url.trim()}
             className="w-full bg-primary text-primary-foreground font-semibold py-4 rounded-lg text-base hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed transition-opacity"
           >
-            Analyze Website
+            Analizar Sitio Web
           </button>
         </form>
 
@@ -66,7 +66,7 @@ const Index = () => {
           <p className="text-destructive text-sm font-mono">{state.message}</p>
         )}
 
-        <p className="text-xs text-muted-foreground">Internal use only.</p>
+        <p className="text-xs text-muted-foreground">Solo para uso interno.</p>
       </div>
     </div>
   );

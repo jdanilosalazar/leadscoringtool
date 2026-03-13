@@ -26,13 +26,13 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
               className="text-sm text-muted-foreground hover:text-foreground font-medium transition-colors inline-flex items-center gap-1.5"
             >
               <Download className="h-3.5 w-3.5" />
-              Download PDF
+              Descargar PDF
             </button>
             <button
               onClick={onReset}
               className="text-sm text-primary hover:underline font-medium transition-colors"
             >
-              New Analysis
+              Nuevo Análisis
             </button>
           </div>
         </header>
@@ -95,7 +95,7 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
 
         <footer className="pt-8 pb-16 text-center">
           <p className="text-xs text-muted-foreground font-mono">
-            Probance Lead Scoring v{data.version_scoring} — Internal Use Only
+            Probance Lead Scoring v{data.version_scoring} — Solo para uso interno
           </p>
         </footer>
       </div>
