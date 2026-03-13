@@ -17,7 +17,7 @@ export function useAnalysis() {
       const response = await fetch(
         `https://n8n.jdanilosalazar.lat/webhook/0eeb2579-6cc3-4c27-80d1-1f5a2b23eb75?${params}`
       );
-      if (!response.ok) throw new Error(`Analysis failed (status ${response.status})`);
+      if (!response.ok) throw new Error(`El análisis falló (estado ${response.status})`);
 
       const text = await response.text();
       if (!text.trim()) throw new Error("Webhook returned an empty response.");
