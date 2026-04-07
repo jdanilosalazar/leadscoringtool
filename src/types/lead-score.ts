@@ -1,27 +1,34 @@
-export type Tier = "Hot" | "Warm" | "Cold" | "DISCARDED";
-export type ICPFit = "ICP Core" | "ICP Secondary" | "ICP Weak" | "unknown";
+export type Tier = "Caliente" | "Tibio" | "Frío" | "Frío Bajo" | "DESCARTADO";
+export type ICPFit = "ICP Core" | "ICP Secondary" | "ICP Weak" | "Desconocido";
 
 export interface LeadScoreResult {
   domain: string;
-  url: string;
+  URL: string;
   merchant_name: string | null;
-  sitio_descripcion: string | null;
+  sitio_title: string | null;
   pais_codigo: string | null;
 
   points: number;
   tier: Tier;
   icp_fit: ICPFit;
-  signals_llm_readable: string;
-  signals: string;
 
+  category: string | null;
+  categoria_api_raw: string | null;
+  categoria_requiere_revision: boolean;
+
+  mediana_visitas_mensuales: number;
   promedio_visitas_mensuales: number;
   visitas_totales_mensuales: number | null;
-  visitas_ultimo_mes: number | null;
+  visits_m1: number | null;
+  visits_m2: number | null;
+  visits_m3: number | null;
   traffic_band: string;
-  m1_to_m3_growth_pct: number | null;
+  traffic_volatility: string | null;
+  m1_to_median_growth_pct: number | null;
 
   tasa_rebote: number | null;
   paginas_por_sesion: number | null;
+  duracion_visita_segundos: number | null;
   duracion_visita_minutos: number | null;
 
   trafico_direct: number;
@@ -30,23 +37,56 @@ export interface LeadScoreResult {
   trafico_paid_referrals: number;
   trafico_social: number;
   trafico_mail: number;
+  traffic_source: string | null;
 
   cms_name: string | null;
   cms_confianza: number | null;
   cms_source: string | null;
   email_mktg_tool: string | null;
   email_tool_grupo: number;
-  email_tool_confianza: number;
+  email_tool_source: string | null;
+  email_data_confidence: number;
   email_tools_all: string | null;
-  installed_apps_names: string | null;
+  email_tools_installed_at: string | null;
 
-  categoria: string | null;
-  categoria_original: string | null;
   numero_productos: number;
-  numero_empleados: number | null;
   rank_global: number | null;
+  created: string | null;
+  last_plan_shopify: string | null;
+  last_plan_change_at: string | null;
 
-  fecha_metricas: string | null;
+  fortaleza_1: string | null;
+  fortaleza_2: string | null;
+  fortaleza_3: string | null;
+  fortaleza_4: string | null;
+  fortaleza_5: string | null;
+  fortaleza_6: string | null;
+  fortaleza_7: string | null;
+  fortaleza_8: string | null;
+  fortaleza_9: string | null;
+  fortaleza_10: string | null;
+
+  oportunidad_1: string | null;
+  oportunidad_2: string | null;
+  oportunidad_3: string | null;
+
+  riesgo_1: string | null;
+  riesgo_2: string | null;
+  riesgo_3: string | null;
+  riesgo_4: string | null;
+  riesgo_5: string | null;
+
+  contact_email_1: string | null;
+  contact_email_2: string | null;
+  contact_email_3: string | null;
+  contact_phone_1: string | null;
+  contact_phone_2: string | null;
+  contact_linkedin: string | null;
+  contact_instagram: string | null;
+  contact_whatsapp: string | null;
+
+  fecha_metricas_trafico: string | null;
+  fecha_metricas_tienda: string | null;
   fecha_ultimo_mes: string | null;
   fecha_calculo: string;
   version_scoring: string;

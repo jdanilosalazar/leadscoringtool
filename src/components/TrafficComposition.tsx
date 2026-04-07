@@ -5,6 +5,8 @@ interface TrafficCompositionProps {
   trafico_paid_referrals: number;
   trafico_social: number;
   trafico_mail: number;
+  traffic_volatility: string | null;
+  m1_to_median_growth_pct: number | null;
 }
 
 const LABELS: Record<string, string> = {
@@ -16,15 +18,74 @@ const LABELS: Record<string, string> = {
   trafico_mail:          "Email",
 };
 
-export function TrafficComposition(props: TrafficCompositionProps) {
-  const entries = Object.entries(props) as [string, number][];
-  const max = Math.max(...entries.map(([, v]) => v));
+const VOLATILITY_LABEL: Record<string, string> = {
+  stable:   "Estable",
+  moderate: "Moderada",
+  volatile: "Volátil",
+  unknown:  "—",
+};
+
+const VOLATILITY_COLOR: Record<string, string> = {
+  stable:   "text-emerald-400",
+  moderate: "text-yellow-400",
+  volatile: "text-red-400",
+  unknown:  "text-muted-foreground",
+};
+
+export function TrafficComposition({
+  trafico_direct,
+  trafico_search,
+  trafico_referrals,
+  trafico_paid_referrals,
+  trafico_social,
+  trafico_mail,
+  traffic_volatility,
+  m1_to_median_growth_pct,
+}: TrafficCompositionProps) {
+  const channelEntries: [string, number][] = [
+    ["trafico_direct", trafico_direct],
+    ["trafico_search", trafico_search],
+    ["trafico_referrals", trafico_referrals],
+    ["trafico_paid_referrals", trafico_paid_referrals],
+    ["trafico_social", trafico_social],
+    ["trafico_mail", trafico_mail],
+  ];
+  const max = Math.max(...channelEntries.map(([, v]) => v));
+
+  const growthDisplay = m1_to_median_growth_pct !== null
+    ? `${m1_to_median_growth_pct > 0 ? "+" : ""}${m1_to_median_growth_pct}%`
+    : null;
+
+  const growthColor = m1_to_median_growth_pct === null ? ""
+    : m1_to_median_growth_pct >= 0 ? "text-emerald-400"
+    : "text-red-400";
 
   return (
     <section className="space-y-4 animate-fade-in" style={{ animationDelay: "400ms" }}>
       <h2 className="text-lg font-semibold">Composición de Tráfico</h2>
+
+      {/* Volatility + growth summary */}
+      {(traffic_volatility || growthDisplay) && (
+        <div className="flex gap-4 flex-wrap">
+          {traffic_volatility && (
+            <div className="bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">Volatilidad</span>
+              <span className={`font-mono text-sm font-semibold ${VOLATILITY_COLOR[traffic_volatility] ?? "text-foreground"}`}>
+                {VOLATILITY_LABEL[traffic_volatility] ?? traffic_volatility}
+              </span>
+            </div>
+          )}
+          {growthDisplay && (
+            <div className="bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-2">
+              <span className="text-xs text-muted-foreground">M1 vs Mediana</span>
+              <span className={`font-mono text-sm font-semibold ${growthColor}`}>{growthDisplay}</span>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="bg-card border border-border rounded-lg p-5 space-y-3">
-        {entries
+        {channelEntries
           .sort(([, a], [, b]) => b - a)
           .map(([key, value]) => (
             <div key={key} className="space-y-1">

@@ -13,11 +13,13 @@ interface InfrastructureSectionProps {
   cms_source: string | null;
   email_mktg_tool: string | null;
   email_tool_grupo: number;
-  email_tool_confianza: number;
+  email_tool_source: string | null;
+  email_data_confidence: number;
   email_tools_all: string | null;
-  installed_apps_names: string | null;
+  email_tools_installed_at: string | null;
   version_scoring: string;
-  fecha_metricas: string | null;
+  fecha_metricas_trafico: string | null;
+  fecha_metricas_tienda: string | null;
   data_source: string | null;
 }
 
@@ -36,15 +38,17 @@ export function InfrastructureSection({
   cms_source,
   email_mktg_tool,
   email_tool_grupo,
-  email_tool_confianza,
+  email_tool_source,
+  email_data_confidence,
   email_tools_all,
-  installed_apps_names,
+  email_tools_installed_at,
   version_scoring,
-  fecha_metricas,
+  fecha_metricas_trafico,
+  fecha_metricas_tienda,
   data_source,
 }: InfrastructureSectionProps) {
   const emailDisplay = email_mktg_tool
-    ? `${email_mktg_tool} — ${email_tool_confianza}%`
+    ? `${email_mktg_tool} — ${email_data_confidence}%`
     : "No detectado";
 
   const groupLabel = EMAIL_GROUP_LABEL[email_tool_grupo] ?? "Desconocido";
@@ -60,16 +64,19 @@ export function InfrastructureSection({
         <DataRow label="Fuente CMS" value={cms_source ?? "—"} />
         <DataRow label="Herramienta Email" value={emailDisplay} />
         <DataRow label="Grupo Email" value={`Grupo ${email_tool_grupo} — ${groupLabel}`} />
+        {email_tool_source && <DataRow label="Fuente Email" value={email_tool_source} />}
+        <DataRow label="Confianza Detección Email" value={`${email_data_confidence}%`} />
         {email_tools_all && <DataRow label="Todas las Herramientas Email" value={email_tools_all} />}
-        <DataRow label="Fecha Métricas" value={fecha_metricas?.slice(0, 10) ?? "—"} />
+        {fecha_metricas_trafico && <DataRow label="Fecha Métricas Tráfico" value={fecha_metricas_trafico.slice(0, 10)} />}
+        {fecha_metricas_tienda && <DataRow label="Fecha Métricas Tienda" value={fecha_metricas_tienda.slice(0, 10)} />}
         <DataRow label="Fuente de Datos" value={data_source ?? "—"} />
         <DataRow label="Versión Scoring" value={`v${version_scoring}`} />
       </div>
 
-      {installed_apps_names && (
+      {email_tools_installed_at && (
         <div className="bg-card border border-border rounded-lg p-4 space-y-2">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Apps Instaladas</p>
-          <p className="text-sm leading-relaxed text-muted-foreground">{installed_apps_names}</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Fechas Instalación Email Tools</p>
+          <p className="text-sm leading-relaxed text-muted-foreground font-mono">{email_tools_installed_at}</p>
         </div>
       )}
     </section>

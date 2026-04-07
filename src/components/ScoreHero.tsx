@@ -2,23 +2,46 @@ import { useEffect, useState } from "react";
 import { Tier, ICPFit } from "@/types/lead-score";
 
 const TIER_COLOR: Record<string, string> = {
-  Hot:  "text-tier-hot",
-  Warm: "text-tier-warm",
-  Cold: "text-tier-cold",
+  Caliente:   "text-tier-hot",
+  Tibio:      "text-tier-warm",
+  "Frío":     "text-tier-cold",
+  "Frío Bajo":"text-muted-foreground",
+  DESCARTADO: "text-muted-foreground",
 };
 
 const TIER_BG: Record<string, string> = {
-  Hot:  "bg-tier-hot/15 text-tier-hot border-tier-hot/30",
-  Warm: "bg-tier-warm/15 text-tier-warm border-tier-warm/30",
-  Cold: "bg-tier-cold/15 text-tier-cold border-tier-cold/30",
+  Caliente:   "bg-tier-hot/15 text-tier-hot border-tier-hot/30",
+  Tibio:      "bg-tier-warm/15 text-tier-warm border-tier-warm/30",
+  "Frío":     "bg-tier-cold/15 text-tier-cold border-tier-cold/30",
+  "Frío Bajo":"bg-muted text-muted-foreground border-border",
+  DESCARTADO: "bg-muted text-muted-foreground border-border",
+};
+
+const TIER_BAR: Record<string, string> = {
+  Caliente:   "bg-tier-hot",
+  Tibio:      "bg-tier-warm",
+  "Frío":     "bg-tier-cold",
+  "Frío Bajo":"bg-muted-foreground",
+  DESCARTADO: "bg-muted-foreground",
+};
+
+const TIER_THRESHOLD: Record<string, string> = {
+  Caliente:   "≥ 20 pts",
+  Tibio:      "≥ 14 pts",
+  "Frío":     "≥ 7 pts",
+  "Frío Bajo":"< 7 pts",
+  DESCARTADO: "Descartado",
 };
 
 const ICP_BG: Record<string, string> = {
   "ICP Core":      "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
   "ICP Secondary": "bg-blue-500/15 text-blue-400 border-blue-500/30",
   "ICP Weak":      "bg-yellow-500/15 text-yellow-400 border-yellow-500/30",
-  "unknown":       "bg-muted text-muted-foreground border-border",
+  "Desconocido":   "bg-muted text-muted-foreground border-border",
 };
+
+// Visual max for the progress bar (theoretical ceiling of the scoring model)
+const DISPLAY_MAX = 28;
 
 interface ScoreHeroProps {
   points: number;
@@ -26,16 +49,16 @@ interface ScoreHeroProps {
   icp_fit: ICPFit;
   url: string;
   merchant_name: string | null;
-  sitio_descripcion: string | null;
+  sitio_title: string | null;
   fecha_calculo: string;
   pais_codigo: string | null;
+  revision_manual: string | null;
 }
 
 export function ScoreHero({
-  points, tier, icp_fit, url, merchant_name, sitio_descripcion, fecha_calculo, pais_codigo
+  points, tier, icp_fit, url, merchant_name, sitio_title, fecha_calculo, pais_codigo, revision_manual
 }: ScoreHeroProps) {
   const [displayed, setDisplayed] = useState(0);
-  const MAX = 13;
 
   useEffect(() => {
     const steps = 40;
@@ -49,13 +72,22 @@ export function ScoreHero({
     return () => clearInterval(interval);
   }, [points]);
 
+  const needsReview = revision_manual === "SÍ";
+
   return (
     <section className="text-center space-y-6 py-14">
+      {/* Revision warning badge */}
+      {needsReview && (
+        <div className="inline-flex items-center gap-2 bg-yellow-500/15 text-yellow-400 border border-yellow-500/30 rounded-md px-4 py-2 text-sm font-semibold">
+          ⚠ Requiere revisión manual de categoría
+        </div>
+      )}
+
       {/* Score */}
       <div className="space-y-3">
         <div className={`text-8xl font-bold tracking-tight font-mono ${TIER_COLOR[tier] ?? "text-foreground"}`}>
           {displayed}
-          <span className="text-3xl text-muted-foreground font-normal">/{MAX}</span>
+          <span className="text-3xl text-muted-foreground font-normal"> pts</span>
         </div>
         <div className="flex items-center justify-center gap-2 flex-wrap">
           <span className={`inline-flex items-center px-3 py-1 rounded-md border text-sm font-semibold font-mono ${TIER_BG[tier] ?? "bg-muted"}`}>
@@ -85,9 +117,9 @@ export function ScoreHero({
         >
           {url}
         </a>
-        {sitio_descripcion && (
+        {sitio_title && (
           <p className="text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed pt-1">
-            {sitio_descripcion}
+            {sitio_title}
           </p>
         )}
         <p className="font-mono text-xs text-muted-foreground pt-1">
@@ -99,14 +131,12 @@ export function ScoreHero({
       <div className="max-w-xs mx-auto space-y-1">
         <div className="h-1.5 bg-border rounded-full overflow-hidden">
           <div
-            className={`h-full rounded-full transition-all duration-700 ${
-              tier === "Hot" ? "bg-tier-hot" : tier === "Warm" ? "bg-tier-warm" : "bg-tier-cold"
-            }`}
-            style={{ width: `${(points / MAX) * 100}%` }}
+            className={`h-full rounded-full transition-all duration-700 ${TIER_BAR[tier] ?? "bg-muted-foreground"}`}
+            style={{ width: `${Math.min((points / DISPLAY_MAX) * 100, 100)}%` }}
           />
         </div>
         <p className="text-xs text-muted-foreground font-mono text-right">
-          {points} / {MAX} pts · {tier === "Hot" ? "≥7 Hot" : tier === "Warm" ? "≥4 Warm" : "<4 Cold"}
+          {points} pts · {TIER_THRESHOLD[tier] ?? ""}
         </p>
       </div>
     </section>

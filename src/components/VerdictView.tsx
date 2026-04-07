@@ -5,6 +5,7 @@ import { StoreOverview } from "@/components/StoreOverview";
 import { SignalsBreakdown } from "@/components/SignalsBreakdown";
 import { InfrastructureSection } from "@/components/InfrastructureSection";
 import { TrafficComposition } from "@/components/TrafficComposition";
+import { ContactSection } from "@/components/ContactSection";
 import { TierDefinitions } from "@/components/TierDefinitions";
 import { HowItWorks } from "@/components/HowItWorks";
 
@@ -42,30 +43,43 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
           points={data.points}
           tier={data.tier}
           icp_fit={data.icp_fit}
-          url={data.url}
+          url={data.URL}
           merchant_name={data.merchant_name}
-          sitio_descripcion={data.sitio_descripcion}
+          sitio_title={data.sitio_title}
           fecha_calculo={data.fecha_calculo}
           pais_codigo={data.pais_codigo}
+          revision_manual={data.revision_manual}
         />
 
         <StoreOverview
+          mediana_visitas_mensuales={data.mediana_visitas_mensuales}
           promedio_visitas_mensuales={data.promedio_visitas_mensuales}
           visitas_totales_mensuales={data.visitas_totales_mensuales}
-          visitas_ultimo_mes={data.visitas_ultimo_mes}
+          visits_m1={data.visits_m1}
           traffic_band={data.traffic_band}
-          m1_to_m3_growth_pct={data.m1_to_m3_growth_pct}
+          traffic_volatility={data.traffic_volatility}
+          m1_to_median_growth_pct={data.m1_to_median_growth_pct}
           numero_productos={data.numero_productos}
-          categoria={data.categoria}
-          categoria_original={data.categoria_original}
+          category={data.category}
+          categoria_api_raw={data.categoria_api_raw}
           rank_global={data.rank_global}
           tasa_rebote={data.tasa_rebote}
           paginas_por_sesion={data.paginas_por_sesion}
           duracion_visita_minutos={data.duracion_visita_minutos}
+          last_plan_shopify={data.last_plan_shopify}
+          created={data.created}
         />
 
         <SignalsBreakdown
-          signals_llm_readable={data.signals_llm_readable}
+          fortalezas={[
+            data.fortaleza_1, data.fortaleza_2, data.fortaleza_3, data.fortaleza_4,
+            data.fortaleza_5, data.fortaleza_6, data.fortaleza_7, data.fortaleza_8,
+            data.fortaleza_9, data.fortaleza_10,
+          ]}
+          oportunidades={[data.oportunidad_1, data.oportunidad_2, data.oportunidad_3]}
+          riesgos={[
+            data.riesgo_1, data.riesgo_2, data.riesgo_3, data.riesgo_4, data.riesgo_5,
+          ]}
           points={data.points}
         />
 
@@ -75,11 +89,13 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
           cms_source={data.cms_source}
           email_mktg_tool={data.email_mktg_tool}
           email_tool_grupo={data.email_tool_grupo}
-          email_tool_confianza={data.email_tool_confianza}
+          email_tool_source={data.email_tool_source}
+          email_data_confidence={data.email_data_confidence}
           email_tools_all={data.email_tools_all}
-          installed_apps_names={data.installed_apps_names}
+          email_tools_installed_at={data.email_tools_installed_at}
           version_scoring={data.version_scoring}
-          fecha_metricas={data.fecha_metricas}
+          fecha_metricas_trafico={data.fecha_metricas_trafico}
+          fecha_metricas_tienda={data.fecha_metricas_tienda}
           data_source={data.data_source}
         />
 
@@ -90,6 +106,19 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
           trafico_paid_referrals={data.trafico_paid_referrals}
           trafico_social={data.trafico_social}
           trafico_mail={data.trafico_mail}
+          traffic_volatility={data.traffic_volatility}
+          m1_to_median_growth_pct={data.m1_to_median_growth_pct}
+        />
+
+        <ContactSection
+          contact_email_1={data.contact_email_1}
+          contact_email_2={data.contact_email_2}
+          contact_email_3={data.contact_email_3}
+          contact_phone_1={data.contact_phone_1}
+          contact_phone_2={data.contact_phone_2}
+          contact_linkedin={data.contact_linkedin}
+          contact_instagram={data.contact_instagram}
+          contact_whatsapp={data.contact_whatsapp}
         />
 
         <TierDefinitions />
