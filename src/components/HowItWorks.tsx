@@ -12,7 +12,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function SignalRow({ label, pts, description }: { label: string; pts: string; description: string }) {
   return (
     <div className="flex gap-3 py-2 border-b border-border last:border-0">
-      <div className="shrink-0 font-mono text-xs text-primary font-semibold w-12 pt-0.5">{pts}</div>
+      <div className="shrink-0 font-mono text-xs text-primary font-semibold w-14 pt-0.5">{pts}</div>
       <div className="space-y-0.5">
         <p className="text-sm font-medium">{label}</p>
         <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
@@ -24,7 +24,7 @@ function SignalRow({ label, pts, description }: { label: string; pts: string; de
 function ICPRow({ tier, color, categories }: { tier: string; color: string; categories: string }) {
   return (
     <div className="flex gap-3 py-2 border-b border-border last:border-0">
-      <div className={`shrink-0 font-mono text-xs font-semibold w-20 pt-0.5 ${color}`}>{tier}</div>
+      <div className={`shrink-0 font-mono text-xs font-semibold w-24 pt-0.5 ${color}`}>{tier}</div>
       <p className="text-xs text-muted-foreground leading-relaxed">{categories}</p>
     </div>
   );
@@ -54,9 +54,10 @@ export function HowItWorks() {
           {/* Qué es */}
           <Section title="¿Qué es este score?">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              El score de Probance evalúa qué tan probable es que una tienda ecommerce sea un buen
-              prospecto. Se calcula automáticamente a partir de señales públicas sobre la infraestructura,
-              tráfico y comportamiento de la tienda. El score va de <span className="font-mono font-semibold text-foreground">0 a 13 puntos</span>.
+              El score evalúa qué tan probable es que una tienda ecommerce sea un buen prospecto para Probance.
+              Se calcula automáticamente a partir de señales públicas sobre tráfico, stack de herramientas,
+              tamaño del catálogo y comportamiento de la tienda. El umbral mínimo para ser evaluado es{" "}
+              <span className="font-mono font-semibold text-foreground">5,000 visitas ponderadas</span> (m1×0.5 + m2×0.3 + m3×0.2).
             </p>
           </Section>
 
@@ -64,24 +65,38 @@ export function HowItWorks() {
           <Section title="Niveles de clasificación">
             <div className="bg-card border border-border rounded-lg px-5">
               <div className="flex gap-3 py-2.5 border-b border-border">
-                <span className="shrink-0 font-mono text-xs font-semibold w-16 text-tier-hot">HOT</span>
+                <span className="shrink-0 font-mono text-xs font-semibold w-20 text-tier-hot">CALIENTE</span>
                 <div>
-                  <p className="text-sm font-medium">≥ 7 puntos</p>
+                  <p className="text-sm font-medium">≥ 20 puntos</p>
                   <p className="text-xs text-muted-foreground">Alta prioridad. Contactar de forma inmediata.</p>
                 </div>
               </div>
               <div className="flex gap-3 py-2.5 border-b border-border">
-                <span className="shrink-0 font-mono text-xs font-semibold w-16 text-tier-warm">WARM</span>
+                <span className="shrink-0 font-mono text-xs font-semibold w-20 text-tier-warm">TIBIO</span>
                 <div>
-                  <p className="text-sm font-medium">4 – 6 puntos</p>
-                  <p className="text-xs text-muted-foreground">Prioridad media. Hay señales positivas pero no suficientes para contacto inmediato.</p>
+                  <p className="text-sm font-medium">≥ 16 puntos</p>
+                  <p className="text-xs text-muted-foreground">Prioridad media. Hay señales positivas — vale la pena contactar.</p>
+                </div>
+              </div>
+              <div className="flex gap-3 py-2.5 border-b border-border">
+                <span className="shrink-0 font-mono text-xs font-semibold w-20 text-tier-cold">FRÍO</span>
+                <div>
+                  <p className="text-sm font-medium">≥ 10 puntos</p>
+                  <p className="text-xs text-muted-foreground">Prioridad baja. Evaluar con cautela.</p>
+                </div>
+              </div>
+              <div className="flex gap-3 py-2.5 border-b border-border">
+                <span className="shrink-0 font-mono text-xs font-semibold w-20 text-muted-foreground">CONGELADO</span>
+                <div>
+                  <p className="text-sm font-medium">{"< 10 puntos"}</p>
+                  <p className="text-xs text-muted-foreground">Muy baja calificación — despriorizar.</p>
                 </div>
               </div>
               <div className="flex gap-3 py-2.5">
-                <span className="shrink-0 font-mono text-xs font-semibold w-16 text-tier-cold">COLD</span>
+                <span className="shrink-0 font-mono text-xs font-semibold w-20 text-muted-foreground">DESCARTADO</span>
                 <div>
-                  <p className="text-sm font-medium">{"< 4 puntos"}</p>
-                  <p className="text-xs text-muted-foreground">Baja prioridad. La tienda no cumple suficientes criterios en este momento.</p>
+                  <p className="text-sm font-medium">Sin datos de tráfico o visitas ponderadas {"<"} 5,000</p>
+                  <p className="text-xs text-muted-foreground">No se puntúa. La tienda no tiene tráfico suficiente para ser un prospecto viable.</p>
                 </div>
               </div>
             </div>
@@ -93,17 +108,17 @@ export function HowItWorks() {
               <ICPRow
                 tier="ICP Core"
                 color="text-emerald-400"
-                categories="Moda, alimentos y bebidas, vino y licores, mascotas, suplementos deportivos, vape. Alta afinidad con Probance."
+                categories="Moda, alimentos y bebidas, belleza, mascotas, suplementos, vape. Alta afinidad con Probance."
               />
               <ICPRow
                 tier="ICP Secondary"
                 color="text-blue-400"
-                categories="Deporte, belleza y cosmética, joyería, bebés y juguetes, hogar, farmacia, motor, papelería. Afinidad media."
+                categories="Deporte, joyería, bebés, hobbies, muebles, farmacia, motor, papelería. Afinidad media."
               />
               <ICPRow
                 tier="ICP Weak"
                 color="text-yellow-400"
-                categories="Electrónica, lujo, cannabis. Baja afinidad con el modelo de Probance."
+                categories="Electrónica, lujo, cannabis/CBD. Baja afinidad con el modelo de Probance."
               />
             </div>
           </Section>
@@ -112,88 +127,87 @@ export function HowItWorks() {
           <Section title="Señales de scoring">
             <div className="bg-card border border-border rounded-lg px-5">
               <SignalRow
+                pts="+7 pts"
+                label="Volumen de tráfico (7 niveles)"
+                description="Basado en visitas ponderadas (m1×0.5 + m2×0.3 + m3×0.2). Más tráfico = mayor potencial de impacto con email."
+              />
+              <SignalRow
+                pts="+4 pts"
+                label="Stack de email marketing"
+                description="Grupo 1–2 (Shopify Email, Sendgrid, Mailerlite, Mailjet…): +4 pts. Grupo 3 (Mailchimp, Brevo, Omnisend…): +3 pts. Grupo 4 (Klaviyo, Connectif…): +2 pts. Grupo 5 (HubSpot, Salesforce…): +1 pt. Sin herramienta detectada: 0 pts — se requiere revisión manual para confirmar si usan email."
+              />
+              <SignalRow
+                pts="+5 pts"
+                label="Tamaño del catálogo (7 niveles)"
+                description="Catálogos más grandes se benefician más de la personalización de Probance. Penalización de -1 pt para catálogos de menos de 50 productos."
+              />
+              <SignalRow
                 pts="+3 pts"
-                label="Sin herramienta de email marketing"
-                description="No se detectó ninguna herramienta. Máxima oportunidad de entrada para Probance."
+                label="Antigüedad de la tienda"
+                description="Tiendas con más historia tienen más datos de clientes y mayor necesidad de automatización."
+              />
+              <SignalRow
+                pts="+3 pts"
+                label="Crecimiento de tráfico (trimestre)"
+                description="Basado en m1_vs_m3: diferencia porcentual entre el mes más reciente y el de hace 3 meses. Crecimiento fuerte suma hasta +3 pts; caída pronunciada resta hasta -3 pts."
+              />
+              <SignalRow
+                pts="+3 pts"
+                label="Tráfico social alto"
+                description="Alta proporción de tráfico social indica una audiencia activa que necesita estrategias de retención — exactamente donde ayuda el email."
               />
               <SignalRow
                 pts="+2 pts"
-                label="Herramienta de email simple"
-                description="Shopify Email o Sendgrid detectados. Herramientas básicas con poco potencial de personalización."
+                label="Tasa de rebote baja"
+                description="Visitantes más comprometidos generan más datos de comportamiento, lo que potencia el tracker de Probance."
               />
               <SignalRow
                 pts="+2 pts"
-                label="Herramienta de email básica"
-                description="Mailerlite, Mailjet o similar. Funcionalidades limitadas, alta posibilidad de upgrade."
-              />
-              <SignalRow
-                pts="+1 pt"
-                label="Herramienta de email completa"
-                description="Mailchimp, Brevo, Omnisend o similar. Competidor directo con posibilidad de migración."
-              />
-              <SignalRow
-                pts="+1 pt"
-                label="Herramienta de email avanzada"
-                description="Klaviyo, Connectif o similar. Competidor fuerte — oportunidad existe si hay insatisfacción."
-              />
-              <SignalRow
-                pts="+0 pts"
-                label="CRM con email (HubSpot, Salesforce, Zoho)"
-                description="Solución enterprise. Ciclo de venta muy largo, baja prioridad."
+                label="Páginas por sesión altas"
+                description="Más páginas visitadas = datos de navegación más ricos para personalización de emails."
               />
               <SignalRow
                 pts="+2 pts"
-                label="Tráfico de email < 1%"
-                description="El canal de email genera menos del 1% del tráfico. Indica que el email marketing está prácticamente sin explotar."
+                label="Migración de plataforma reciente (< 12 meses)"
+                description="Un cambio de CMS reciente indica que la tienda está en modo inversión y más abierta a adoptar nuevas herramientas."
               />
               <SignalRow
                 pts="+1 pt"
-                label="Tráfico de email 1–3%"
-                description="El canal de email tiene uso mínimo. Hay margen claro de mejora."
-              />
-              <SignalRow
-                pts="+2 pts"
-                label="Crecimiento de tráfico ≥30%"
-                description="El tráfico creció más de 30% entre el mes 1 y mes 3. Tiendas en crecimiento tienen más presupuesto y motivación para invertir."
-              />
-              <SignalRow
-                pts="+2 pts"
-                label="Migración de plataforma reciente"
-                description="Cambio de CMS en los últimos 18 meses. Las migraciones generan ventanas de cambio en toda la stack de herramientas."
+                label="CMS compatible (Shopify / WooCommerce / PrestaShop)"
+                description="Integración nativa disponible — reducción de fricción técnica en la implementación."
               />
               <SignalRow
                 pts="+1 pt"
-                label="Rediseño de tienda reciente"
-                description="Cambio de tema en los últimos 90 días. Indica inversión activa en la experiencia de compra."
+                label="Tráfico de búsqueda alto"
+                description="Buen SEO implica tráfico orgánico estable y predecible — una base sólida para complementar con email."
               />
               <SignalRow
                 pts="+1 pt"
-                label="Tienda nueva"
-                description="Creada hace menos de 18 meses. Las tiendas nuevas están construyendo su stack desde cero."
+                label="Tráfico directo alto"
+                description="Indica reconocimiento de marca. Clientes que vuelven directamente son los más valiosos para retención."
               />
               <SignalRow
                 pts="+1 pt"
-                label="Catálogo mediano (500–1,499 productos)"
-                description="Catálogos de este tamaño se benefician significativamente de la personalización de Probance."
+                label="Duración de visita alta"
+                description="Visitas de más de 1 minuto indican intención real de compra."
               />
               <SignalRow
-                pts="+2 pts"
-                label="Catálogo grande (≥1,500 productos)"
-                description="Catálogos grandes tienen mayor complejidad y necesidad de personalización avanzada."
+                pts="-2 pts"
+                label="Tráfico pagado alto"
+                description="Dependencia de paid traffic indica presión de márgenes, lo que dificulta la inversión en nuevas herramientas."
               />
             </div>
           </Section>
 
-          {/* Gates */}
-          <Section title="Requisitos mínimos">
+          {/* Gate */}
+          <Section title="Requisito mínimo para ser evaluado">
             <div className="bg-card border border-border rounded-lg px-5">
-              <div className="py-2.5 border-b border-border">
-                <p className="text-sm font-medium">Plataforma Gold</p>
-                <p className="text-xs text-muted-foreground mt-0.5">Solo se evalúan tiendas en Shopify, WooCommerce o PrestaShop.</p>
-              </div>
               <div className="py-2.5">
-                <p className="text-sm font-medium">Tráfico mínimo</p>
-                <p className="text-xs text-muted-foreground mt-0.5">La tienda debe tener un promedio de al menos 5,000 visitas mensuales. Las tiendas que no cumplen aparecen como DESCARTADAS.</p>
+                <p className="text-sm font-medium">Visitas ponderadas ≥ 5,000</p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Se calcula como m1×0.5 + m2×0.3 + m3×0.2. Prioriza el tráfico reciente y es más estable que
+                  la mediana en ejecuciones mensuales. Las tiendas que no alcanzan el umbral aparecen como DESCARTADAS.
+                </p>
               </div>
             </div>
           </Section>
