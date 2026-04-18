@@ -62,7 +62,7 @@ function pctHighlight(n: number | null): "positive" | "negative" | "neutral" {
 function fmtDate(s: string | null): string {
   if (!s) return "";
   const d = new Date(s);
-  return isNaN(d.getTime()) ? s : d.toLocaleDateString("es-ES", { month: "short", year: "numeric" });
+  return isNaN(d.getTime()) ? s : d.toLocaleDateString("es-ES", { month: "short", year: "numeric", timeZone: "UTC" });
 }
 
 const VOLATILITY_LABEL: Record<string, string> = {
