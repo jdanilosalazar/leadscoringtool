@@ -67,16 +67,32 @@ export function InfrastructureSection({
         {fuente_herramienta_email && <DataRow label="Fuente Email" value={fuente_herramienta_email} />}
         <DataRow label="Confianza Detección Email" value={email_data_confidence} />
         {email_tools_all && <DataRow label="Todas las Herramientas Email" value={email_tools_all} />}
-        {fecha_metricas_trafico && <DataRow label="Fecha Métricas Tráfico" value={fecha_metricas_trafico.slice(0, 10)} />}
-        {fecha_metricas_tienda && <DataRow label="Fecha Métricas Tienda" value={fecha_metricas_tienda.slice(0, 10)} />}
         <DataRow label="Fuente de Datos" value={data_source ?? "—"} />
         <DataRow label="Versión Scoring" value={`v${version_scoring}`} />
       </div>
 
-      {email_tools_installed_at && (
+      {(email_tools_installed_at || fecha_metricas_trafico || fecha_metricas_tienda) && (
         <div className="bg-card border border-border rounded-lg p-4 space-y-2">
-          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Fechas Instalación Email Tools</p>
-          <p className="text-sm leading-relaxed text-muted-foreground font-mono">{email_tools_installed_at}</p>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Fechas</p>
+          {email_tools_installed_at && (
+            <p className="text-sm leading-relaxed text-muted-foreground font-mono">{email_tools_installed_at}</p>
+          )}
+          {(fecha_metricas_trafico || fecha_metricas_tienda) && (
+            <div className={email_tools_installed_at ? "pt-2 border-t border-border space-y-1" : "space-y-1"}>
+              {fecha_metricas_trafico && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Métricas tráfico</span>
+                  <span className="font-mono font-medium">{fecha_metricas_trafico.slice(0, 10)}</span>
+                </div>
+              )}
+              {fecha_metricas_tienda && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Métricas tienda</span>
+                  <span className="font-mono font-medium">{fecha_metricas_tienda.slice(0, 10)}</span>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </section>
