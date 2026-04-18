@@ -179,7 +179,7 @@ export function StoreOverview({
         {rank_global ? <MetricCard label="Ranking Global" value={`#${fmt(rank_global)}`} mono /> : null}
         {fecha_creacion_tienda && (
           <MetricCard
-            label="Creada"
+            label="Fecha Creación Tienda"
             value={fecha_creacion_tienda.slice(0, 10)}
             mono
             sub={store_age_band ? (AGE_BAND_LABEL[store_age_band] ?? store_age_band) : undefined}
