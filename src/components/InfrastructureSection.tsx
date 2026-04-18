@@ -13,8 +13,8 @@ interface InfrastructureSectionProps {
   cms_source: string | null;
   email_mktg_tool: string | null;
   email_tool_grupo: number;
-  email_tool_source: string | null;
-  email_data_confidence: number;
+  fuente_herramienta_email: string | null;
+  email_data_confidence: string;
   email_tools_all: string | null;
   email_tools_installed_at: string | null;
   version_scoring: string;
@@ -38,7 +38,7 @@ export function InfrastructureSection({
   cms_source,
   email_mktg_tool,
   email_tool_grupo,
-  email_tool_source,
+  fuente_herramienta_email,
   email_data_confidence,
   email_tools_all,
   email_tools_installed_at,
@@ -48,7 +48,7 @@ export function InfrastructureSection({
   data_source,
 }: InfrastructureSectionProps) {
   const emailDisplay = email_mktg_tool
-    ? `${email_mktg_tool} — ${email_data_confidence}%`
+    ? `${email_mktg_tool} — ${email_data_confidence}`
     : "No detectado";
 
   const groupLabel = EMAIL_GROUP_LABEL[email_tool_grupo] ?? "Desconocido";
@@ -64,8 +64,8 @@ export function InfrastructureSection({
         <DataRow label="Fuente CMS" value={cms_source ?? "—"} />
         <DataRow label="Herramienta Email" value={emailDisplay} />
         <DataRow label="Grupo Email" value={`Grupo ${email_tool_grupo} — ${groupLabel}`} />
-        {email_tool_source && <DataRow label="Fuente Email" value={email_tool_source} />}
-        <DataRow label="Confianza Detección Email" value={`${email_data_confidence}%`} />
+        {fuente_herramienta_email && <DataRow label="Fuente Email" value={fuente_herramienta_email} />}
+        <DataRow label="Confianza Detección Email" value={email_data_confidence} />
         {email_tools_all && <DataRow label="Todas las Herramientas Email" value={email_tools_all} />}
         {fecha_metricas_trafico && <DataRow label="Fecha Métricas Tráfico" value={fecha_metricas_trafico.slice(0, 10)} />}
         {fecha_metricas_tienda && <DataRow label="Fecha Métricas Tienda" value={fecha_metricas_tienda.slice(0, 10)} />}

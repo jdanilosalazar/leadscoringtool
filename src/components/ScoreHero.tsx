@@ -5,7 +5,7 @@ const TIER_COLOR: Record<string, string> = {
   Caliente:   "text-tier-hot",
   Tibio:      "text-tier-warm",
   "Frío":     "text-tier-cold",
-  "Frío Bajo":"text-muted-foreground",
+  "Congelado":"text-muted-foreground",
   DESCARTADO: "text-muted-foreground",
 };
 
@@ -13,7 +13,7 @@ const TIER_BG: Record<string, string> = {
   Caliente:   "bg-tier-hot/15 text-tier-hot border-tier-hot/30",
   Tibio:      "bg-tier-warm/15 text-tier-warm border-tier-warm/30",
   "Frío":     "bg-tier-cold/15 text-tier-cold border-tier-cold/30",
-  "Frío Bajo":"bg-muted text-muted-foreground border-border",
+  "Congelado":"bg-muted text-muted-foreground border-border",
   DESCARTADO: "bg-muted text-muted-foreground border-border",
 };
 
@@ -21,15 +21,15 @@ const TIER_BAR: Record<string, string> = {
   Caliente:   "bg-tier-hot",
   Tibio:      "bg-tier-warm",
   "Frío":     "bg-tier-cold",
-  "Frío Bajo":"bg-muted-foreground",
+  "Congelado":"bg-muted-foreground",
   DESCARTADO: "bg-muted-foreground",
 };
 
 const TIER_THRESHOLD: Record<string, string> = {
   Caliente:   "≥ 20 pts",
-  Tibio:      "≥ 14 pts",
-  "Frío":     "≥ 7 pts",
-  "Frío Bajo":"< 7 pts",
+  Tibio:      "≥ 16 pts",
+  "Frío":     "≥ 10 pts",
+  "Congelado":"< 10 pts",
   DESCARTADO: "Descartado",
 };
 
@@ -72,7 +72,7 @@ export function ScoreHero({
     return () => clearInterval(interval);
   }, [points]);
 
-  const needsReview = revision_manual === "SÍ";
+  const needsReview = revision_manual === "SI";
 
   return (
     <section className="text-center space-y-6 py-14">

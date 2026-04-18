@@ -1,4 +1,4 @@
-export type Tier = "Caliente" | "Tibio" | "Frío" | "Frío Bajo" | "DESCARTADO";
+export type Tier = "Caliente" | "Tibio" | "Frío" | "Congelado" | "DESCARTADO";
 export type ICPFit = "ICP Core" | "ICP Secondary" | "ICP Weak" | "Desconocido";
 
 export interface LeadScoreResult {
@@ -16,15 +16,20 @@ export interface LeadScoreResult {
   categoria_api_raw: string | null;
   categoria_requiere_revision: boolean;
 
-  mediana_visitas_mensuales: number;
+  visitas_ponderadas: number;
   promedio_visitas_mensuales: number;
   visitas_totales_mensuales: number | null;
   visits_m1: number | null;
   visits_m2: number | null;
   visits_m3: number | null;
+  fecha_visits_m1: string | null;
+  fecha_visits_m2: string | null;
+  fecha_visits_m3: string | null;
   traffic_band: string;
   traffic_volatility: string | null;
-  m1_to_median_growth_pct: number | null;
+  traffic_trend: string | null;
+  m1_vs_m2_pct: number | null;
+  m1_vs_m3_pct: number | null;
 
   tasa_rebote: number | null;
   paginas_por_sesion: number | null;
@@ -44,14 +49,15 @@ export interface LeadScoreResult {
   cms_source: string | null;
   email_mktg_tool: string | null;
   email_tool_grupo: number;
-  email_tool_source: string | null;
-  email_data_confidence: number;
+  fuente_herramienta_email: string | null;
+  email_data_confidence: string;
   email_tools_all: string | null;
   email_tools_installed_at: string | null;
 
   numero_productos: number;
   rank_global: number | null;
-  created: string | null;
+  fecha_creacion_tienda: string | null;
+  store_age_band: string | null;
   last_plan_shopify: string | null;
   last_plan_change_at: string | null;
 

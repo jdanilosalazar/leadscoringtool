@@ -1,9 +1,9 @@
 export function TierDefinitions() {
   const tiers = [
     { label: "CALIENTE", color: "bg-tier-hot",  threshold: "≥ 20 pts", description: "Alta calificación — priorizar contacto" },
-    { label: "TIBIO",    color: "bg-tier-warm", threshold: "≥ 14 pts", description: "Calificación media — vale la pena seguir" },
-    { label: "FRÍO",     color: "bg-tier-cold", threshold: "≥ 7 pts",  description: "Calificación baja — evaluar con cautela" },
-    { label: "FRÍO BAJO",color: "bg-muted-foreground", threshold: "< 7 pts",  description: "Muy baja calificación — despriorizar" },
+    { label: "TIBIO",     color: "bg-tier-warm",        threshold: "≥ 16 pts", description: "Calificación media — vale la pena seguir" },
+    { label: "FRÍO",      color: "bg-tier-cold",        threshold: "≥ 10 pts", description: "Calificación baja — evaluar con cautela" },
+    { label: "CONGELADO", color: "bg-muted-foreground", threshold: "< 10 pts", description: "Muy baja calificación — despriorizar" },
   ];
 
   return (

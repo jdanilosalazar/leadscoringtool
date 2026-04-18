@@ -6,7 +6,7 @@ interface TrafficCompositionProps {
   trafico_social: number;
   trafico_mail: number;
   traffic_volatility: string | null;
-  m1_to_median_growth_pct: number | null;
+  m1_vs_m3_pct: number | null;
 }
 
 const LABELS: Record<string, string> = {
@@ -40,7 +40,7 @@ export function TrafficComposition({
   trafico_social,
   trafico_mail,
   traffic_volatility,
-  m1_to_median_growth_pct,
+  m1_vs_m3_pct,
 }: TrafficCompositionProps) {
   const channelEntries: [string, number][] = [
     ["trafico_direct", trafico_direct],
@@ -52,12 +52,12 @@ export function TrafficComposition({
   ];
   const max = Math.max(...channelEntries.map(([, v]) => v));
 
-  const growthDisplay = m1_to_median_growth_pct !== null
-    ? `${m1_to_median_growth_pct > 0 ? "+" : ""}${m1_to_median_growth_pct}%`
+  const growthDisplay = m1_vs_m3_pct !== null
+    ? `${m1_vs_m3_pct > 0 ? "+" : ""}${m1_vs_m3_pct}%`
     : null;
 
-  const growthColor = m1_to_median_growth_pct === null ? ""
-    : m1_to_median_growth_pct >= 0 ? "text-emerald-400"
+  const growthColor = m1_vs_m3_pct === null ? ""
+    : m1_vs_m3_pct >= 0 ? "text-emerald-400"
     : "text-red-400";
 
   return (
@@ -77,7 +77,7 @@ export function TrafficComposition({
           )}
           {growthDisplay && (
             <div className="bg-card border border-border rounded-lg px-4 py-3 flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">M1 vs Mediana</span>
+              <span className="text-xs text-muted-foreground">M1 vs M3 (trimestre)</span>
               <span className={`font-mono text-sm font-semibold ${growthColor}`}>{growthDisplay}</span>
             </div>
           )}

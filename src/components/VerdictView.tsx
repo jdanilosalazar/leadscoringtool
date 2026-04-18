@@ -52,13 +52,20 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
         />
 
         <StoreOverview
-          mediana_visitas_mensuales={data.mediana_visitas_mensuales}
+          visitas_ponderadas={data.visitas_ponderadas}
           promedio_visitas_mensuales={data.promedio_visitas_mensuales}
           visitas_totales_mensuales={data.visitas_totales_mensuales}
           visits_m1={data.visits_m1}
+          visits_m2={data.visits_m2}
+          visits_m3={data.visits_m3}
+          fecha_visits_m1={data.fecha_visits_m1}
+          fecha_visits_m2={data.fecha_visits_m2}
+          fecha_visits_m3={data.fecha_visits_m3}
           traffic_band={data.traffic_band}
           traffic_volatility={data.traffic_volatility}
-          m1_to_median_growth_pct={data.m1_to_median_growth_pct}
+          traffic_trend={data.traffic_trend}
+          m1_vs_m2_pct={data.m1_vs_m2_pct}
+          m1_vs_m3_pct={data.m1_vs_m3_pct}
           numero_productos={data.numero_productos}
           category={data.category}
           categoria_api_raw={data.categoria_api_raw}
@@ -67,7 +74,8 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
           paginas_por_sesion={data.paginas_por_sesion}
           duracion_visita_minutos={data.duracion_visita_minutos}
           last_plan_shopify={data.last_plan_shopify}
-          created={data.created}
+          fecha_creacion_tienda={data.fecha_creacion_tienda}
+          store_age_band={data.store_age_band}
         />
 
         <SignalsBreakdown
@@ -89,7 +97,7 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
           cms_source={data.cms_source}
           email_mktg_tool={data.email_mktg_tool}
           email_tool_grupo={data.email_tool_grupo}
-          email_tool_source={data.email_tool_source}
+          fuente_herramienta_email={data.fuente_herramienta_email}
           email_data_confidence={data.email_data_confidence}
           email_tools_all={data.email_tools_all}
           email_tools_installed_at={data.email_tools_installed_at}
@@ -107,7 +115,7 @@ export function VerdictView({ data, onReset }: VerdictViewProps) {
           trafico_social={data.trafico_social}
           trafico_mail={data.trafico_mail}
           traffic_volatility={data.traffic_volatility}
-          m1_to_median_growth_pct={data.m1_to_median_growth_pct}
+          m1_vs_m3_pct={data.m1_vs_m3_pct}
         />
 
         <ContactSection
